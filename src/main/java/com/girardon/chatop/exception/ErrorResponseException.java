@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorResponse {
+public class ErrorResponseException {
 
     private int statusCode;
     private String message;
 
-    public ErrorResponse(String message) {
+    public ErrorResponseException(String message) {
         super();
         this.message = message;
     }

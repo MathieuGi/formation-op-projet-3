@@ -1,6 +1,5 @@
 package com.girardon.chatop.exception;
 
-
 public class UserExistsException extends RuntimeException {
     private String message;
 
