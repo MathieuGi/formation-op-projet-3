@@ -1,6 +1,7 @@
 package com.girardon.chatop.controller;
 
 import com.girardon.chatop.DTO.AuthResponse;
+import com.girardon.chatop.DTO.LoginRequest;
 import com.girardon.chatop.DTO.RegisterRequest;
 import com.girardon.chatop.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,5 +22,11 @@ public class AuthController {
     @Operation(summary = "Register a new user", operationId = "registerUser")
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "Login into your account", operationId = "login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
