@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -32,11 +34,15 @@ public class AuthService {
         }
 
         String hashedPassword = passwordEncoder.encode(request.password());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         User user = new User();
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPassword(hashedPassword);
+        user.setCreatedAt(timestamp);
+        user.setUpdatedAt(timestamp);
+
 
         userRepository.save(user);
 
