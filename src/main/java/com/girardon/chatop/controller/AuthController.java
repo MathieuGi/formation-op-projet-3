@@ -1,8 +1,8 @@
 package com.girardon.chatop.controller;
 
-import com.girardon.chatop.DTO.AuthResponse;
-import com.girardon.chatop.DTO.LoginRequest;
-import com.girardon.chatop.DTO.RegisterRequest;
+import com.girardon.chatop.dto.AuthResponse;
+import com.girardon.chatop.dto.LoginRequest;
+import com.girardon.chatop.dto.RegisterRequest;
 import com.girardon.chatop.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,4 +1,4 @@
-package com.girardon.chatop.DTO;
+package com.girardon.chatop.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
 package com.girardon.chatop.exception;
 
-import com.girardon.chatop.DTO.ErrorResponse;
+import com.girardon.chatop.dto.ErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;

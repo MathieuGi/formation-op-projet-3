@@ -2,6 +2,7 @@ package com.girardon.chatop.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,5 +26,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", message));
+    }
+
+    @ExceptionHandler(RequestRejectedException.class)
+    public ResponseEntity<ErrorResponseException> handleRequestRejectedError(RequestRejectedException ex) {
+        return ResponseEntity.badRequest().body(new ErrorResponseException(400, ex.getMessage()));
     }
 }

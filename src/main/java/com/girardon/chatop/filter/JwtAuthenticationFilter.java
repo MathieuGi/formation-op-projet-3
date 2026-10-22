@@ -1,6 +1,6 @@
 package com.girardon.chatop.filter;
 
-import com.girardon.chatop.service.JwtService;
+import com.girardon.chatop.config.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
