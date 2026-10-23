@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -34,5 +35,10 @@ public class RentalService {
 
         rentalRepository.save(rental);
 
+    }
+
+    public Iterable<Rental> getRentals() {
+
+        return rentalRepository.findAll();
     }
 }
