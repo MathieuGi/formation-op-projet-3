@@ -27,19 +27,20 @@ public class RentalController {
     private final RentalService rentalService;
     private final ModelMapper modelMapper;
 
+    private final String UPLOAD_DIRECTORY = "src/main/resources/static/";
+
     @PostMapping(path = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<String> saveRental(@ModelAttribute RentalCreateRequest rentalRequest,
                                              @RequestPart MultipartFile picture,
                                              @AuthenticationPrincipal UserDetails userDetails) {
 
 
-        String uploadDirectory = "src/main/resources/static/";
         String picturePath;
         Rental rental = modelMapper.map(rentalRequest, Rental.class);
         try {
-            picturePath = pictureService.savePicture(picture, uploadDirectory);
+            picturePath = pictureService.savePicture(picture, UPLOAD_DIRECTORY);
         } catch (IOException e) {
-            return ResponseEntity.badRequest().body("An error occure with the image");
+            return ResponseEntity.badRequest().body("An error occurs with the image");
         }
 
         rental.setPicture(picturePath);
@@ -47,6 +48,27 @@ public class RentalController {
 
 
         return ResponseEntity.ok("Rental created");
+    }
+
+    @PutMapping(path = "/{rentalId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> updateRental(@ModelAttribute RentalCreateRequest rentalRequest,
+                                               @RequestPart MultipartFile picture,
+                                               @AuthenticationPrincipal UserDetails userDetails,
+                                               @PathVariable int rentalId) {
+        String picturePath;
+        Rental rental = modelMapper.map(rentalRequest, Rental.class);
+
+        try {
+            picturePath = pictureService.savePicture(picture, UPLOAD_DIRECTORY);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("An error occurs with the image");
+        }
+
+        rental.setPicture(picturePath);
+        rental.setId(rentalId);
+        rentalService.saveRental(rental, userDetails);
+
+        return ResponseEntity.ok("Rental updated");
     }
 
     @GetMapping(path = "")
