@@ -1,11 +1,11 @@
 package com.girardon.chatop.service;
 
+import com.girardon.chatop.exception.EntityNotFoundException;
 import com.girardon.chatop.model.Rental;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.repository.RentalRepository;
 import com.girardon.chatop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class RentalService {
     private final RentalRepository rentalRepository;
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
     public void saveRental(Rental rental, UserDetails userDetails) {
@@ -35,5 +34,9 @@ public class RentalService {
     public Iterable<Rental> getRentals() {
 
         return rentalRepository.findAll();
+    }
+
+    public Rental getRentalById(int id) {
+        return rentalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rental not found"));
     }
 }

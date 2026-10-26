@@ -61,4 +61,11 @@ public class RentalController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<RentalResponse> getRental(@PathVariable int id) {
+        Rental rental = rentalService.getRentalById(id);
+
+        return ResponseEntity.ok(modelMapper.map(rental, RentalResponse.class));
+    }
 }

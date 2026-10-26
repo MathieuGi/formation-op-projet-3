@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseException> handleRequestRejectedError(RequestRejectedException ex) {
         return ResponseEntity.badRequest().body(new ErrorResponseException(400, ex.getMessage()));
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponseException> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseException(404, ex.getMessage()));
+    }
 }
