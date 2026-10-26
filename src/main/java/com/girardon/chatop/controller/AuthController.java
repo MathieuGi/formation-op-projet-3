@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,7 +41,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    @Operation(summary = "Get connected user informations", operationId = "me")
+    @Operation(summary = "Get connected user information", operationId = "me")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> me(@AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.getUserByEmail(userDetails.getUsername());

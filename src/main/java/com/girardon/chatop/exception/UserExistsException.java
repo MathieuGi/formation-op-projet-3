@@ -1,13 +1,14 @@
 package com.girardon.chatop.exception;
 
-public class UserExistsException extends RuntimeException {
-    private String message;
+import lombok.Getter;
 
-    public UserExistsException() {
-    }
+@Getter
+public class UserExistsException extends RuntimeException {
+    private final String message;
 
     public UserExistsException(String msg) {
         super(msg);
         this.message = msg;
     }
+
 }

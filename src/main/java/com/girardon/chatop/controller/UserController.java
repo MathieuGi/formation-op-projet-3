@@ -4,6 +4,7 @@ import com.girardon.chatop.dto.UserDto;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
 @RequestMapping("/api/user")
+@Tag(name = "Users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
