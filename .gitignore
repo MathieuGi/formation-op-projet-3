@@ -31,4 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Code ###
 src/main/resources/static/
+
+### Config ###
+env.properties
