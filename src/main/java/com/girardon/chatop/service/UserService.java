@@ -1,5 +1,6 @@
 package com.girardon.chatop.service;
 
+import com.girardon.chatop.exception.EntityNotFoundException;
 import com.girardon.chatop.exception.UserExistsException;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.repository.UserRepository;
@@ -21,14 +22,7 @@ public class UserService {
                 "exists"));
     }
 
-    public String saveUser(User user) {
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-
-        if (existingUser.isEmpty()) {
-            userRepository.save(user);
-            return "User added successfully";
-        } else {
-            throw new UserExistsException("this email is already used !");
-        }
+    public User getUserById(int id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("This user doesn't exists"));
     }
 }
