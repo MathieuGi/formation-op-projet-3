@@ -1,4 +1,4 @@
-package com.girardon.chatop.DTO;
+package com.girardon.chatop.dto;
 
 import java.util.Map;
 

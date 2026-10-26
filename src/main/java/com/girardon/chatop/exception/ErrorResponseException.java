@@ -12,9 +12,4 @@ public class ErrorResponseException {
 
     private int statusCode;
     private String message;
-
-    public ErrorResponseException(String message) {
-        super();
-        this.message = message;
-    }
 }
