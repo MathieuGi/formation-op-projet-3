@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -79,12 +80,10 @@ public class RentalController {
     @GetMapping(path = "")
     @Operation(summary = "Retrieve all rentals", operationId = "GetRentals")
     public ResponseEntity<RentalsResponse> getRentals() {
-
-        List<RentalResponse> rentals =
-                StreamSupport.stream(rentalService.getRentals().spliterator(), false).toList().stream().map(
-                        rental -> modelMapper.map(rental, RentalResponse.class)).toList();
-
         RentalsResponse response = new RentalsResponse();
+        List<RentalResponse> rentals = new ArrayList<>();
+
+        rentalService.getRentals().forEach(rental -> rentals.add(modelMapper.map(rental, RentalResponse.class)));
         response.setRentals(rentals);
 
         return ResponseEntity.ok(response);
