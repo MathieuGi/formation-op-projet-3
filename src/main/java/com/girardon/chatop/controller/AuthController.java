@@ -1,9 +1,6 @@
 package com.girardon.chatop.controller;
 
-import com.girardon.chatop.dto.AuthResponse;
-import com.girardon.chatop.dto.LoginRequest;
-import com.girardon.chatop.dto.RegisterRequest;
-import com.girardon.chatop.dto.UserDto;
+import com.girardon.chatop.dto.*;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.service.AuthService;
 import com.girardon.chatop.service.UserService;
@@ -12,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

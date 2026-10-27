@@ -1,10 +1,11 @@
 package com.girardon.chatop.dto;
 
-import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record ErrorResponse(
-        String code,
-        String message,
-        Map<String, String> details
-) {
+@Data
+@AllArgsConstructor
+public class ErrorResponse {
+    String code;
+    String message;
 }

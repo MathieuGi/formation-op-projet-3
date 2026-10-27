@@ -23,8 +23,7 @@ public class SecurityExceptionHandler {
     public ErrorResponse handleBadCredentials(BadCredentialsException ex) {
         return new ErrorResponse(
                 "INVALID_CREDENTIALS",
-                "Email ou mot de passe incorrect",
-                null
+                "Email ou mot de passe incorrect"
         );
     }
 
@@ -34,8 +33,7 @@ public class SecurityExceptionHandler {
     public ErrorResponse handleAccessDenied(AccessDeniedException ex) {
         return new ErrorResponse(
                 "ACCESS_DENIED",
-                "Accès non autorisé à cette ressource",
-                null
+                "Accès non autorisé à cette ressource"
         );
     }
 
@@ -45,8 +43,7 @@ public class SecurityExceptionHandler {
     public ErrorResponse handleExpiredToken(ExpiredJwtException ex) {
         return new ErrorResponse(
                 "TOKEN_EXPIRED",
-                "Session expirée, veuillez vous reconnecter",
-                null
+                "Session expirée, veuillez vous reconnecter"
         );
     }
 
@@ -57,8 +54,7 @@ public class SecurityExceptionHandler {
         log.warn("Invalid JWT token: {}", ex.getMessage());
         return new ErrorResponse(
                 "INVALID_TOKEN",
-                "Token d'authentification invalide",
-                null
+                "Token d'authentification invalide"
         );
     }
 
@@ -68,8 +64,7 @@ public class SecurityExceptionHandler {
     public ErrorResponse handleEmailExists(UserExistsException ex) {
         return new ErrorResponse(
                 "EMAIL_EXISTS",
-                ex.getMessage(),
-                null
+                ex.getMessage()
         );
     }
 }
