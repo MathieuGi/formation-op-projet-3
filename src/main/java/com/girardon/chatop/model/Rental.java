@@ -1,24 +1,26 @@
 package com.girardon.chatop.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "rentals")
-public class Rental {
+public class Rental extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
-    private Long surface;
+    private BigDecimal surface;
 
-    private Long price;
+    private BigDecimal price;
 
     private String picture;
 
@@ -28,9 +30,4 @@ public class Rental {
     @Column(name = "owner_id")
     private int ownerId;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
 }

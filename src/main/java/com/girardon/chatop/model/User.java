@@ -1,21 +1,23 @@
 package com.girardon.chatop.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends AbstractAuditingEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -23,16 +25,14 @@ public class User implements UserDetails {
 
     private String password;
 
-    private Timestamp createdAt;
-
-    private Timestamp updatedAt;
-
     @Override
+    @NullMarked
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
     @Override
+    @NullMarked
     public String getUsername() {
         return email;
     }

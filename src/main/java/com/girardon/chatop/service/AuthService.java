@@ -27,22 +27,13 @@ public class AuthService {
 
 
     @Transactional
-    public AuthResponse register(RegisterRequest request) {
-
-        if (userRepository.existsByEmail(request.email())) {
+    public AuthResponse register(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserExistsException("Email already exists");
         }
 
-        String hashedPassword = passwordEncoder.encode(request.password());
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        User user = new User();
-        user.setName(request.name());
-        user.setEmail(request.email());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        user.setCreatedAt(timestamp);
-        user.setUpdatedAt(timestamp);
-
 
         userRepository.save(user);
 
@@ -51,13 +42,13 @@ public class AuthService {
         return new AuthResponse(jwt);
     }
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthResponse login(String email, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.email(),
-                request.password()
+                email,
+                password
         ));
 
-        User user = userRepository.findByEmail(request.email())
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(
                         () -> new UsernameNotFoundException("This user doesn't exists")
                 );

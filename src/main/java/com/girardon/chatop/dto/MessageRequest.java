@@ -13,8 +13,8 @@ public class MessageRequest {
     String message;
 
     @NotNull
-    Long userId;
+    int userId;
 
     @NotNull
-    Long rentalId;
+    int rentalId;
 }

@@ -22,14 +22,8 @@ public class RentalService {
         User user =
                 userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(
                         "This user doesn't exist"));
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        
         rental.setOwnerId(user.getId());
-
-        if (rental.getId() == 0) {
-            rental.setCreatedAt(timestamp);
-        }
-
-        rental.setUpdatedAt(timestamp);
 
         rentalRepository.save(rental);
 

@@ -29,7 +29,6 @@ public class MessageService {
         }
 
         Message message = modelMapper.map(request, Message.class);
-        message.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
         messageRepository.save(message);
 

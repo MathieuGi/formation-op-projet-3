@@ -1,15 +1,15 @@
 package com.girardon.chatop.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import java.sql.Timestamp;
-
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "messages")
-public class Message {
+public class Message extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,10 +22,4 @@ public class Message {
 
     @Length(max = 2000)
     private String message;
-
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
 }

@@ -7,7 +7,6 @@ import tools.jackson.databind.annotation.JsonNaming;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RentalResponse {
-
     private int id;
     private String name;
     private Long surface;
