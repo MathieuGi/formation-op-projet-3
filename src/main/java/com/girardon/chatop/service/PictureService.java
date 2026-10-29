@@ -2,20 +2,17 @@ package com.girardon.chatop.service;
 
 import com.girardon.chatop.exception.EntityNotFoundException;
 import com.girardon.chatop.exception.FileException;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @Service
 public class PictureService {
-    String UPLOAD_DIRECTORY = "src/main/resources/images/";
+    final String UPLOAD_DIRECTORY = "src/main/resources/images/";
 
     public String savePicture(MultipartFile picture) {
         String uniqueName = System.currentTimeMillis()

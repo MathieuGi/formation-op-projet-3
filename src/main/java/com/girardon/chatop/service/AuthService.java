@@ -1,8 +1,6 @@
 package com.girardon.chatop.service;
 
 import com.girardon.chatop.dto.AuthResponse;
-import com.girardon.chatop.dto.LoginRequest;
-import com.girardon.chatop.dto.RegisterRequest;
 import com.girardon.chatop.config.JwtService;
 import com.girardon.chatop.exception.UserExistsException;
 import com.girardon.chatop.model.User;
@@ -14,8 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
 
 @Service
 @RequiredArgsConstructor

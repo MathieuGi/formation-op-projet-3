@@ -1,27 +1,21 @@
 package com.girardon.chatop.controller;
 
-import com.girardon.chatop.dto.GenericMessageResponse;
-import com.girardon.chatop.dto.RentalCreateRequest;
-import com.girardon.chatop.dto.RentalResponse;
-import com.girardon.chatop.dto.RentalsResponse;
+import com.girardon.chatop.dto.*;
+import com.girardon.chatop.mapper.RentalMapper;
 import com.girardon.chatop.model.Rental;
 import com.girardon.chatop.service.PictureService;
 import com.girardon.chatop.service.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("api/rentals")
@@ -30,20 +24,18 @@ import java.util.stream.StreamSupport;
 public class RentalController {
     private final PictureService pictureService;
     private final RentalService rentalService;
-    private final ModelMapper modelMapper;
+    private final RentalMapper rentalMapper;
 
     @PostMapping(path = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "Create a new rental", operationId = "saveRental")
     public ResponseEntity<GenericMessageResponse> saveRental(@ModelAttribute RentalCreateRequest rentalRequest,
-                                                             @RequestPart MultipartFile picture,
                                                              @AuthenticationPrincipal UserDetails userDetails) {
-
         String pictureName;
-        Rental rental = modelMapper.map(rentalRequest, Rental.class);
+        Rental rental = rentalMapper.toRental(rentalRequest);
 
-        pictureName = pictureService.savePicture(picture);
-
+        pictureName = pictureService.savePicture(rentalRequest.getPicture());
         rental.setPicture("http://localhost:3001/api/images/" + pictureName);
+
         rentalService.saveRental(rental, userDetails);
 
 
@@ -52,13 +44,12 @@ public class RentalController {
 
     @PutMapping(path = "/{rentalId}")
     @Operation(summary = "Update a rental", operationId = "updateRental")
-    public ResponseEntity<GenericMessageResponse> updateRental(@RequestBody RentalCreateRequest rentalRequest,
+    public ResponseEntity<GenericMessageResponse> updateRental(@RequestBody RentalUpdateRequest rentalRequest,
                                                                @AuthenticationPrincipal UserDetails userDetails,
                                                                @PathVariable int rentalId) {
-        Rental rental = modelMapper.map(rentalRequest, Rental.class);
+        Rental rental = rentalMapper.toRental(rentalRequest);
 
-        rental.setId(rentalId);
-        rentalService.saveRental(rental, userDetails);
+        rentalService.updateRental(rentalId, rental, userDetails);
 
         return ResponseEntity.ok(new GenericMessageResponse("Rental updated"));
     }
@@ -67,9 +58,9 @@ public class RentalController {
     @Operation(summary = "Retrieve all rentals", operationId = "GetRentals")
     public ResponseEntity<RentalsResponse> getRentals() {
         RentalsResponse response = new RentalsResponse();
-        List<RentalResponse> rentals = new ArrayList<>();
+        List<RentalDto> rentals = new ArrayList<>();
 
-        rentalService.getRentals().forEach(rental -> rentals.add(modelMapper.map(rental, RentalResponse.class)));
+        rentalService.getRentals().forEach(rental -> rentals.add(rentalMapper.toRentalDto(rental)));
         response.setRentals(rentals);
 
         return ResponseEntity.ok(response);
@@ -77,9 +68,9 @@ public class RentalController {
 
     @GetMapping(path = "/{id}")
     @Operation(summary = "Retrieve a rental by its id", operationId = "getRental")
-    public ResponseEntity<RentalResponse> getRental(@PathVariable int id) {
+    public ResponseEntity<RentalDto> getRental(@PathVariable int id) {
         Rental rental = rentalService.getRentalById(id);
 
-        return ResponseEntity.ok(modelMapper.map(rental, RentalResponse.class));
+        return ResponseEntity.ok(rentalMapper.toRentalDto(rental));
     }
 }
