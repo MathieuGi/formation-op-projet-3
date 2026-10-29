@@ -21,7 +21,7 @@ public class MessageService {
     private final UserService userService;
 
 
-    public MessageResponse saveMessage(MessageRequest request, UserDetails userDetails) {
+    public void saveMessage(MessageRequest request, UserDetails userDetails) {
         User user = userService.getUserByEmail(userDetails.getUsername());
 
         if (user.getId() != request.getUserId()) {
@@ -31,7 +31,5 @@ public class MessageService {
         Message message = modelMapper.map(request, Message.class);
 
         messageRepository.save(message);
-
-        return new MessageResponse("Message sent");
     }
 }
