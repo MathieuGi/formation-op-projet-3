@@ -1,6 +1,7 @@
 package com.girardon.chatop.controller;
 
 import com.girardon.chatop.dto.UserDto;
+import com.girardon.chatop.mapper.UserMapper;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
 
     @GetMapping("{userId}")
     @Operation(summary = "Get user information", operationId = "getUser")
     public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
         User user = userService.getUserById(userId);
-        UserDto userDto = modelMapper.map(user, UserDto.class);
+        UserDto userDto = userMapper.toUserDto(user);
 
         return ResponseEntity.ok(userDto);
     }
