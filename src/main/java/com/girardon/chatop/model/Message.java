@@ -10,10 +10,6 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name = "messages")
 public class Message extends AbstractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(name = "rental_id")
     private int rentalId;
 

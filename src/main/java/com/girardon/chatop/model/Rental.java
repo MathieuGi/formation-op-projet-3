@@ -12,10 +12,6 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "rentals")
 public class Rental extends AbstractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     private String name;
 
     private BigDecimal surface;

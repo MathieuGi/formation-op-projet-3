@@ -15,10 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends AbstractAuditingEntity implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     private String name;
 
     private String email;

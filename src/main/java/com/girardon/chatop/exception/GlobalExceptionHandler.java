@@ -42,4 +42,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseException> handleEntityNotFoundException(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseException(404, ex.getMessage()));
     }
+
+    @ExceptionHandler(FileException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponseException> handleFileException(FileException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseException(500,
+                e.getMessage()));
+    }
 }

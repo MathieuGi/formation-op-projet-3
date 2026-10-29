@@ -26,6 +26,7 @@ public class MessageController {
     @Operation(summary = "Send a message to the rental's owner", operationId = "saveMessage")
     public ResponseEntity<MessageResponse> saveMessage(@Valid @RequestBody MessageRequest request,
                                                        @AuthenticationPrincipal UserDetails userDetails) {
+
         MessageResponse response = messageService.saveMessage(request, userDetails);
         return ResponseEntity.ok(response);
     }
