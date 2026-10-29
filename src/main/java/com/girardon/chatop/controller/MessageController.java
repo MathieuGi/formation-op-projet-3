@@ -1,14 +1,14 @@
 package com.girardon.chatop.controller;
 
+import com.girardon.chatop.dto.GenericMessageResponse;
 import com.girardon.chatop.dto.MessageRequest;
-import com.girardon.chatop.dto.MessageResponse;
+import com.girardon.chatop.mapper.MessageMapper;
+import com.girardon.chatop.model.Message;
 import com.girardon.chatop.service.MessageService;
-import com.girardon.chatop.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
-    private final UserService userService;
+    private final MessageMapper messageMapper;
 
     @PostMapping("")
     @Operation(summary = "Send a message to the rental's owner", operationId = "saveMessage")
-    public ResponseEntity<MessageResponse> saveMessage(@Valid @RequestBody MessageRequest request,
-                                                       @AuthenticationPrincipal UserDetails userDetails) {
-        MessageResponse response = messageService.saveMessage(request, userDetails);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<GenericMessageResponse> saveMessage(@Valid @RequestBody MessageRequest request,
+                                                              @AuthenticationPrincipal UserDetails userDetails) {
+        Message message = messageMapper.toMessage(request);
+        messageService.saveMessage(message, userDetails);
+
+        return ResponseEntity.ok(new GenericMessageResponse("Message sent"));
     }
 }

@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class RentalsResponse {
-    private List<RentalResponse> rentals;
+    private List<RentalDto> rentals;
 }

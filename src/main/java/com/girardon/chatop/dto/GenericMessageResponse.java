@@ -1,6 +1,6 @@
 package com.girardon.chatop.dto;
 
-public record MessageResponse(
+public record GenericMessageResponse(
         String message
 ) {
 }

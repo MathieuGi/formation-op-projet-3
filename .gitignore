@@ -37,3 +37,4 @@ src/main/resources/static/
 
 ### Config ###
 env.properties
+src/main/resources/images/

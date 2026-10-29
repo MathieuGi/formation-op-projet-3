@@ -8,9 +8,8 @@ import com.girardon.chatop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
 
 @Service
 @RequiredArgsConstructor
@@ -22,15 +21,27 @@ public class RentalService {
         User user =
                 userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(
                         "This user doesn't exist"));
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         rental.setOwnerId(user.getId());
 
-        if (rental.getId() == 0) {
-            rental.setCreatedAt(timestamp);
+        rentalRepository.save(rental);
+
+    }
+
+    public void updateRental(int id, Rental rental, UserDetails userDetails) {
+        User user =
+                userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(
+                        "This user doesn't exist"));
+
+        Rental bddRental = rentalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("This rental " +
+                "doesn't exists"));
+
+        if (bddRental.getOwnerId() != user.getId()) {
+            throw new RequestRejectedException("You can't update a rental you didn't create");
         }
 
-        rental.setUpdatedAt(timestamp);
-
+        rental.setId(bddRental.getId());
+        rental.setOwnerId(bddRental.getOwnerId());
         rentalRepository.save(rental);
 
     }
