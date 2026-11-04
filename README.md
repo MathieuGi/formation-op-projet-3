@@ -1,10 +1,36 @@
 # Chatop API project
 
-## 1. Clone the project on your computer
+## 1. Prerequisites & Technology versions
+
+Make sure the following tools are installed before running the project:
+
+    Java (JDK): 21
+
+    Spring Boot: 4.1.1
+
+    Maven: 3.9+
+
+Main dependencies
+
+The project uses the following libraries:
+
+    Spring Security: Version managed by Spring Boot
+
+    Spring Data JPA / Hibernate: Version managed by Spring Boot
+
+    Springdoc OpenAPI (Swagger): 3.1.0
+
+    JJWT (JWT authentication): 0.12.5
+
+    MapStruct: 1.6.3
+
+    Lombok: Version managed by Spring Boot (1.18.36 annotation processor)
+
+## 2. Clone the project on your computer
 
 ``git clone https://github.com/MathieuGi/formation-op-projet-3.git``
 
-## 2. Instantiate the database
+## 3. Instantiate the database
 
 - Create your database with the command : ``CREATE DATABASE {database_name}``
 - Connect to the created database : ``USE {database_name}``
@@ -16,7 +42,7 @@
     - ``GRANT INSERT, UPDATE, DELETE, SELECT ON {database_name}.* To '{user}
     '@'localhost'``
 
-## 3. Initialize environment variable
+## 4. Initialize environment variable
 
 - In your project configuration environment variables or in a file named
   `env.properties` in the root folder of your project add the following
@@ -41,7 +67,7 @@
   System.out.println("Symmetric Key: " + encodedKey);
   ```
 
-## 4. API Documentation
+## 5. API Documentation
 
 - Swagger UI : http://localhost:3001/swagger-ui/index.html
 - API doc JSON : http://localhost:3001/v3/api-docs
