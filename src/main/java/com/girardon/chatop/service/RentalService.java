@@ -1,13 +1,12 @@
 package com.girardon.chatop.service;
 
+import com.girardon.chatop.dto.RentalCreateRequest;
 import com.girardon.chatop.exception.EntityNotFoundException;
+import com.girardon.chatop.mapper.RentalMapper;
 import com.girardon.chatop.model.Rental;
 import com.girardon.chatop.model.User;
 import com.girardon.chatop.repository.RentalRepository;
-import com.girardon.chatop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.stereotype.Service;
 
@@ -15,24 +14,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RentalService {
     private final RentalRepository rentalRepository;
-    private final UserRepository userRepository;
+    private final RentalMapper rentalMapper;
+    private final PictureService pictureService;
+    private final UserService userService;
 
-    public void saveRental(Rental rental, UserDetails userDetails) {
-        User user =
-                userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(
-                        "This user doesn't exist"));
+    public void saveRental(RentalCreateRequest rentalRequest) {
+        Rental rental = rentalMapper.toRental(rentalRequest);
 
+        String picture = pictureService.savePicture(rentalRequest.getPicture());
+        rental.setPicture(picture);
+
+        User user = userService.me();
         rental.setOwnerId(user.getId());
 
         rentalRepository.save(rental);
 
     }
 
-    public void updateRental(int id, Rental rental, UserDetails userDetails) {
-        User user =
-                userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(
-                        "This user doesn't exist"));
-
+    public void updateRental(int id, Rental rental) {
+        User user = userService.me();
         Rental bddRental = rentalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("This rental " +
                 "doesn't exists"));
 

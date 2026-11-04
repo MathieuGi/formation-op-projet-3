@@ -13,6 +13,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class PictureService {
     final String UPLOAD_DIRECTORY = "src/main/resources/images/";
+    final String BASE_PICTURE_URL = "http://localhost:3001/api/images/";
 
     public String savePicture(MultipartFile picture) {
         String uniqueName = System.currentTimeMillis()
@@ -33,7 +34,7 @@ public class PictureService {
         }
 
 
-        return uniqueName;
+        return BASE_PICTURE_URL + uniqueName;
     }
 
     public byte[] getPicture(String name) {

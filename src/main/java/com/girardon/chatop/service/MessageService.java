@@ -16,7 +16,7 @@ public class MessageService {
 
 
     public void saveMessage(Message message, UserDetails userDetails) {
-        User user = userService.getUserByEmail(userDetails.getUsername());
+        User user = userService.me();
 
         if (user.getId() != message.getUserId()) {
             throw new RequestRejectedException("UserId shouldn't be set manually");

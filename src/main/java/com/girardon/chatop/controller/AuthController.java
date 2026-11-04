@@ -11,8 +11,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,8 +38,8 @@ public class AuthController {
     @GetMapping("/me")
     @Operation(summary = "Get connected user information", operationId = "me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<UserDto> me(@AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserByEmail(userDetails.getUsername());
+    public ResponseEntity<UserDto> me() {
+        User user = userService.me();
         UserDto userDto = userMapper.toUserDto(user);
 
         return ResponseEntity.ok(userDto);
